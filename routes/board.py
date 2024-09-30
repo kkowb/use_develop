@@ -24,6 +24,8 @@ def index():
 def add():
     form = request.form
     u = current_user()
-    m = Board.new(form)
-    return redirect(url_for('topic.index'))
-
+    if u.id == 1:
+        m = Board.new(form)
+        return redirect(url_for('topic.index'))
+    else:
+        return render_template('board/adminError.html')
