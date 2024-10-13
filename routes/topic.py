@@ -39,7 +39,9 @@ def index():
 def detail(id):
     m = Topic.get(id)
     # 传递 topic 的所有 reply 到 页面中
-    return render_template("topic/detail.html", topic=m)
+    u = current_user()
+
+    return render_template("topic/detail.html", topic=m, user=u)
 
 
 @main.route("/add", methods=["POST"])
