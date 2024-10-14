@@ -6,6 +6,8 @@ from models.mongua import Mongua
 import logging
 import os
 import time
+from utils import format_time
+
 ogger = logging.getLogger("bbs")
 
 

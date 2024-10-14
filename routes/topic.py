@@ -6,9 +6,8 @@ from flask import (
     Blueprint,
     abort,
 )
-
+import time
 from routes import *
-
 from models.topic import Topic
 from models.board import Board
 
@@ -39,9 +38,10 @@ def index():
 def detail(id):
     m = Topic.get(id)
     # 传递 topic 的所有 reply 到 页面中
-    u = current_user()
-
-    return render_template("topic/detail.html", topic=m, user=u)
+    # t = int(time.time())
+    # m.passed_time = t - m.created_time
+    m.username = m.user().username
+    return render_template("topic/detail.html", topic=m)
 
 
 @main.route("/add", methods=["POST"])

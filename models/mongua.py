@@ -1,5 +1,7 @@
 import time
 from pymongo import MongoClient
+from utils import format_time
+
 mongua = MongoClient()
 
 
@@ -90,8 +92,8 @@ class Mongua(object):
         m.id = next_id(name)
         # print('debug new id ', m.id)
         ts = int(time.time())
-        m.created_time = ts
-        m.updated_time = ts
+        m.created_time = format_time(ts)
+        m.updated_time = format_time(ts)
         # m.deleted = False
         m.type = name.lower()
         # 特殊 model 的自定义设置

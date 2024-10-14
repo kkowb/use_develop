@@ -23,11 +23,12 @@
       	</span>
                 <div class="changes">
             <span>
-                发布于 2 天前
+                发布于 {{ topic.created_time }}
+{#                发布于 {{ topic.passed_time }} 天前#}
             </span>
                     <span>
                 作者
-                <a href="/user/hopperhuang">{{ user }}</a>
+                <a href="/user/hopperhuang">{{ topic.username }}</a>
         	</span>
                     <span>
           	    {{ topic.views }} 次浏览
@@ -67,7 +68,7 @@
                         {{ r.user().username }}
                     </a>
                     <a class="reply_time">
-                        {{ loop.index }}楼 • 2 天前
+                        {{ loop.index }}楼 • {{ r.created_time }}
                     </a>
                 </div>
                 <div class='user_action'>
