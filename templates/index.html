@@ -1,44 +1,153 @@
+{#<!DOCTYPE html>#}
+{#<html lang="en">#}
+{#<head>#}
+{#    <meta charset="UTF-8">#}
+{#    <title>bbs club</title>#}
+{#    <link rel="stylesheet" href="/static/css/bootstrap.min.css">#}
+{#    <style>#}
+{#    </style>#}
+{#</head>#}
+{#<body>#}
+{#    <h1 class="title_h1">NODE CLUB</h1>#}
+{#    <div class="login_box">#}
+{#        <form method="post" action="{{ url_for('.register') }}">#}
+{#            <div>#}
+{#                <label>用户名</label>#}
+{#                <div>#}
+{#                    <input type="text" name="username">#}
+{#                </div>#}
+{#            </div>#}
+{#            <div>#}
+{#                <label>密码</label>#}
+{#                <div>#}
+{#                    <input type="text" name="password">#}
+{#                </div>#}
+{#            </div>#}
+{#            <div >#}
+{#                <input type="submit" value="注册">#}
+{#            </div>#}
+{#        </form>#}
+{#        <form method="post" action="{{ url_for('.login') }}">#}
+{#            <div>#}
+{#                <label>用户名</label>#}
+{#                <div>#}
+{#                    <input type="text" name="username">#}
+{#                </div>#}
+{#            </div>#}
+{#            <div>#}
+{#                <label>密码</label>#}
+{#                <div>#}
+{#                    <input type="text" name="password">#}
+{#                </div>#}
+{#            </div>#}
+{#            <div>#}
+{#                <input type="submit" value="登录">#}
+{#            </div>#}
+{#        </form>#}
+{#    </div>#}
+{#</body>#}
+{#</html>#}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>bbs club</title>
-    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #444444;
+            color: #ffffff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            margin: auto;
+        }
+
+        .title {
+            color: #80bd01;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
+
+        .btn {
+            background-color: #80bd01;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        .btn:hover {
+            background-color: #6ea101;
+        }
+
+        .auth-form + .auth-form {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <form class="form-horizontal" method="post" action="{{ url_for('.register') }}">
-        <div class="control-group">
-            <label class="control-label">用户名</label>
-            <div class="controls">
-                <input type="text" class="input-xlarge" name="username">
+    <div class="container">
+        <h1 class="title">NODE CLUB</h1>
+        <form class="auth-form" method="post" action="{{ url_for('.register') }}">
+            <div class="form-group">
+                <label for="register-username">用户名</label>
+                <input class="form-control" type="text" name="username" id="register-username">
             </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">密码</label>
-            <div class="controls">
-                <input type="text" class="input-xlarge" name="password">
+            <div class="form-group">
+                <label for="register-password">密码</label>
+                <input class="form-control" type="password" name="password" id="register-password">
             </div>
-        </div>
-        <div class="form-actions">
-            <input type="submit" class="span-primary" value="注册">
-        </div>
-    </form>
-    <form class="form-horizontal" method="post" action="{{ url_for('.login') }}">
-        <div class="control-group">
-            <label class="control-label">用户名</label>
-            <div class="controls">
-                <input type="text" class="input-xlarge" name="username">
+            <div class="form-group">
+                <input class="btn" type="submit" value="注册">
             </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label">密码</label>
-            <div class="controls">
-                <input type="text" class="input-xlarge" name="password">
+        </form>
+        <form class="auth-form" method="post" action="{{ url_for('.login') }}">
+            <div class="form-group">
+                <label for="login-username">用户名</label>
+                <input class="form-control" type="text" name="username" id="login-username">
             </div>
-        </div>
-        <div class="form-actions">
-            <input type="submit" class="span-primary" value="登录">
-        </div>
-    </form>
+            <div class="form-group">
+                <label for="login-password">密码</label>
+                <input class="form-control" type="password" name="password" id="login-password">
+            </div>
+            <div class="form-group">
+                <input class="btn" type="submit" value="登录">
+            </div>
+        </form>
+    </div>
 </body>
 </html>

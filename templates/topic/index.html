@@ -7,6 +7,13 @@
     <link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="/static/lib/editor/editor.css">
     <link rel="stylesheet" href="/static/lib/webuploader/webuploader.css">
+    <style>
+        .user_img {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+        }
+    </style>
     <script src="/static/lib/jquery-3.0.0.min.js"></script>
     <script src="/static/lib/markdownit.js"></script>
     <script src="/static/lib/webuploader/webuploader.withoutimage.js"></script>
@@ -30,8 +37,8 @@
                 <li><a href='/getstart'>新手入门</a></li>
                 <li><a href='/api'>API</a></li>
                 <li><a href="/about" target="">关于</a></li>
-                <li><a href='/signup'>注册</a></li>
-                <li><a href='/signin'>登录</a></li>
+                <li><a href='/signup'>版本</a></li>
+                <li><a href='/signin'>文档</a></li>
             </ul>
             <a class="btn btn-navbar" id="responsive-sidebar-trigger">
                 <span class="icon-bar"></span>
@@ -41,6 +48,8 @@
         </div>
     </div>
 </div>
+
+
 <div id="main">
     <div id="sidebar">
         <div class="panel">
@@ -48,9 +57,68 @@
                 <a href="/topic/new" class="create_topic_btn">
                     <span class="span-success">发布话题</span>
                 </a>
+                <a href="/profile" class="create_topic_btn">
+                    <span class="span-success">用户资料</span>
+                </a>
+                <span >
+                    <img class="user_img" alt="头像" src={{ '/uploads/' + image + '?v=3&amp;s=120' }}
+                                 title="atian25"/>
+                </span>
+
+            </div>
+        </div>
+        {#侧边栏#}
+        <div class='panel'>
+            <div class='header'>
+                <span class='col_fade'>无人回复的话题</span>
+            </div>
+            <div class='inner'>
+                <ul class="unstyled">
+                    <li>
+                        <div>
+                            <a class='dark topic_title' href="/topic/670cf135d189b6e0634440ad"
+                                title="Vite打包碎片化，如何化解？">Vite打包碎片化，如何化解？
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <a class='dark topic_title' href="/topic/670a3d3dd189b6712744405f"
+                                title="我的开源项目 5K Star 啦～～">
+                            我的开源项目 5K Star 啦～～
+                        </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <a class='dark topic_title' href="/topic/67092f66d189b6e8c0444046"
+                                title="程序员生涯第五年， Gap 一年，做了个 typora 免费替代的应用，叫做 IF">
+                            程序员生涯第五年，
+                            Gap 一年，做了个 typora 免费替代的应用，叫做 IF
+                        </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <a class='dark topic_title' href="/topic/6707b990d189b6a57d44401f"
+                                title="在Vue3中如何实现四种全局状态数据的统一管理？">
+                            在Vue3中如何实现四种全局状态数据的统一管理？
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <a class='dark topic_title' href="/topic/66e7bcbab1685b588b4d911f"
+                                title="😄 在线制作您的 Project 窗口">
+                                😄 在线制作您的 Project 窗口
+                            </a>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
+    {#侧边栏#}
     <div id="content">
         <div class="panel">
             <div class="header">
@@ -60,33 +128,34 @@
                 </a>
 
                 {% for b in bs %}
-                <a href="/topic?board_id={{ b.id }}"
-                   class="topic-tab current-tab">
-                    {{ b.title }}
-                </a>
+                    <a href="/topic?board_id={{ b.id }}"
+                       class="topic-tab current-tab">
+                        {{ b.title }}
+                    </a>
                 {% endfor %}
             </div>
             <div class="inner post">
                 <div class="topic_list">
                     {% for t in ms %}
-                    <div class="cell">
-                        <div class="topic_title_wrapper">
-
-                            <a class="user_avatar pull-left">
-                                 <img src={{ '/uploads/' + t.user().user_image + '?v=3&amp;s=120' }}
-                            title="atian25"/>
-                            </a>
-
-                            <a class="topic_title" href="{{ url_for('topic.detail', id=t.id) }}">
-                                {{ t.title }}
-                            </a>
-                            <span>{{ t.replies() | count }} / {{ t.views }}</span>
-                            <a class="topic_title" href="{{ url_for('topic.delete', id=t.id, token=token) }}">
-                                删除
-                            </a>
-
+                        <div class="cell">
+                            <div class="topic_title_wrapper">
+                                <a class="user_avatar pull-left">
+                                    <img src={{ '/uploads/' + t.user().user_image + '?v=3&amp;s=120' }}
+                                                 title="atian25"/>
+                                </a>
+                                &ensp;
+                                <a class="topic_title" href="{{ url_for('topic.detail', id=t.id) }}">
+                                    {{ t.title }}
+                                </a>
+                                <span>{{ t.replies() | count }} / {{ t.views }}</span>
+                                <a class="topic_title" href="{{ url_for('topic.delete', id=t.id, token=token) }}">
+                                    删除
+                                </a>
+                                <span class="last_time pull-right">
+                                    <span class="last_active_time"> {{ t.created_time }} </span>
+                                </span>
+                            </div>
                         </div>
-                    </div>
                     {% endfor %}
                 </div>
             </div>
@@ -94,10 +163,10 @@
     </div>
 </div>
 <script>
-  (function () {
-    var editor = new Editor();
-    editor.render($('.editor')[0]);
-  })();
+    (function () {
+        var editor = new Editor();
+        editor.render($('.editor')[0]);
+    })();
 
 </script>
 </body>

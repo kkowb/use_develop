@@ -31,7 +31,8 @@ def index():
     u = current_user()
     csrf_tokens['token'] = u.id
     bs = Board.all()
-    return render_template("topic/index.html", ms=ms, token=token, bs=bs)
+    image = u.user_image
+    return render_template("topic/index.html", image=image, ms=ms, token=token, bs=bs)
 
 
 @main.route('/<int:id>')
@@ -76,3 +77,4 @@ def delete():
 def new():
     bs = Board.all()
     return render_template("topic/new.html", bs=bs)
+
