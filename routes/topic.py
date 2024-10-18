@@ -6,7 +6,7 @@ from flask import (
     Blueprint,
     abort,
 )
-import time
+from utils import log
 from routes import *
 from models.topic import Topic
 from models.board import Board
@@ -24,12 +24,13 @@ def index():
     if board_id == -1:
         #ms = Topic.cache_all()
         ms = Topic.all_delay()
+        log('ms', ms)
     else:
         #ms = Topic.cache_find(board_id)
         ms = Topic.find_all(board_id=board_id)
     token = str(uuid.uuid4())
     u = current_user()
-    csrf_tokens['token'] = u.id
+    csrf_tokens[token] = u.id
     bs = Board.all()
     image = u.user_image
     return render_template("topic/index.html", image=image, ms=ms, token=token, bs=bs)
@@ -58,13 +59,16 @@ def add():
 @main.route("/delete")
 def delete():
     id = int(request.args.get('id'))
+    # log('id', type(id))
     token = request.args.get('token')
+    # log("token", token)
     u = current_user()
     # 判断 token 是否是我们给的
     if token in csrf_tokens and csrf_tokens[token] == u.id:
-        csrf_tokens.pop(token)
+        log(1)
+        # csrf_tokens.pop(token)
         if u is not None:
-            print('删除 topic 用户是', u, id)
+            # log('删除 topic 的用户是', u, id)
             Topic.delete(id)
             return redirect(url_for('.index'))
         else:

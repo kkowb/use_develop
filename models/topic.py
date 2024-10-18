@@ -55,12 +55,13 @@ class Topic(Mongua):
     cache = MemoryCache()
     # 2. redis cahce
     redis_cache = RedisCache()
+
     def to_json(self):
         d = dict()
         for k in Topic.__fields__:
             key = k[0]
             if not key.startswith('_'):
-                d[key] = getattr(self,key)
+                d[key] = getattr(self, key)
         return json.dumps(d)
 
     @classmethod
@@ -74,8 +75,11 @@ class Topic(Mongua):
 
     @classmethod
     def all_delay(cls):
-        time.sleep(3)
-        return Topic.all()
+        # time.sleep(3)
+        ts = Topic.all()
+        # 过滤被删除的话题
+        t_all = [item for item in ts if item.deleted is False]
+        return t_all
 
     @classmethod
     def get(cls, id):
@@ -91,15 +95,13 @@ class Topic(Mongua):
     @classmethod
     def cache_all(cls):
 
-        #2. redis cache
+        # 2. redis cache
         if Topic.should_update_all:
             Topic.redis_cache.set('topic_all', json.dumps([i.to_json() for i in cls.all_delay()]))
             Topic.should_update_all = False
         j = json.loads(Topic.redis_cache.get('topic_all').decode('utf-8'))
         j = [Topic.from_json(i) for i in j]
         return j
-
-
 
     def replies(self):
         from .reply import Reply

@@ -25,7 +25,7 @@
 <div class='navbar'>
     <div class='navbar-inner'>
         <div class='container'>
-            <a class='brand' href='/'>
+            <a class='brand' href="{{ url_for('topic.index') }}">
                 <img src="//static2.cnodejs.org/public/images/cnodejs_light.svg"/>
             </a>
 
@@ -33,7 +33,7 @@
                 <input type='text' id='q' name='q' class='search-query span3' value=''/>
             </form>
             <ul class='nav pull-right'>
-                <li><a href='/'>首页</a></li>
+                <li><a href="{{ url_for('topic.index') }}">首页</a></li>
                 <li><a href='/getstart'>新手入门</a></li>
                 <li><a href='/api'>API</a></li>
                 <li><a href="/about" target="">关于</a></li>
@@ -118,7 +118,6 @@
             </div>
         </div>
     </div>
-    {#侧边栏#}
     <div id="content">
         <div class="panel">
             <div class="header">

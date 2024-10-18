@@ -224,13 +224,18 @@ class Mongua(object):
         name = self.__class__.__name__
         mongua.db[name].save(self.__dict__)
 
-    def delete(self):
-        name = self.__class__.__name__
+    @classmethod
+    def delete(cls, id):
+        name = cls.__name__
+        print(name)
         query = {
-            'id': self.id,
+            'id': id,
         }
         values = {
-            'deleted': True
+            '$set': {
+                # 使用 $set 操作符来更新字段
+                'deleted': True
+            }
         }
         mongua.db[name].update_one(query, values)
         # self.deleted = True
