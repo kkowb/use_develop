@@ -1,6 +1,6 @@
 .idea
 data
-config.py
+#config.py
 gua.log.txt
 log.gua.txt
 
