@@ -57,7 +57,7 @@
                 <a href="/topic/new" class="create_topic_btn">
                     <span class="span-success">发布话题</span>
                 </a>
-                <a href="/profile" class="create_topic_btn">
+                <a href="{{ url_for('index.profile') }}" class="create_topic_btn">
                     <span class="span-success">用户资料</span>
                 </a>
                 <span >
@@ -74,46 +74,14 @@
             </div>
             <div class='inner'>
                 <ul class="unstyled">
-                    <li>
-                        <div>
-                            <a class='dark topic_title' href="/topic/670cf135d189b6e0634440ad"
-                                title="Vite打包碎片化，如何化解？">Vite打包碎片化，如何化解？
-                            </a>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <a class='dark topic_title' href="/topic/670a3d3dd189b6712744405f"
-                                title="我的开源项目 5K Star 啦～～">
-                            我的开源项目 5K Star 啦～～
-                        </a>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <a class='dark topic_title' href="/topic/67092f66d189b6e8c0444046"
-                                title="程序员生涯第五年， Gap 一年，做了个 typora 免费替代的应用，叫做 IF">
-                            程序员生涯第五年，
-                            Gap 一年，做了个 typora 免费替代的应用，叫做 IF
-                        </a>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <a class='dark topic_title' href="/topic/6707b990d189b6a57d44401f"
-                                title="在Vue3中如何实现四种全局状态数据的统一管理？">
-                            在Vue3中如何实现四种全局状态数据的统一管理？
-                            </a>
-                        </div>
-                    </li>
-                    <li>
-                        <div>
-                            <a class='dark topic_title' href="/topic/66e7bcbab1685b588b4d911f"
-                                title="😄 在线制作您的 Project 窗口">
-                                😄 在线制作您的 Project 窗口
-                            </a>
-                        </div>
-                    </li>
+                    {% for z in zero_replies[:5] %}
+                        <li>
+                            <div>
+                                <a class='dark topic_title' href="{{ url_for('topic.detail', id=z.id) }}">{{ z.title }}
+                                </a>
+                            </div>
+                        </li>
+                    {% endfor %}
                 </ul>
             </div>
         </div>
@@ -147,7 +115,7 @@
                                     {{ t.title }}
                                 </a>
                                 <span>{{ t.replies() | count }} / {{ t.views }}</span>
-                                <a class="topic_title" href="{{ url_for('topic.delete', id=t.id, token=token) }}">
+                                <a class="topic_title" href="{{ url_for('topic.delete', uid=t.user_id, id=t.id, token=token) }}">
                                     删除
                                 </a>
                                 <span class="last_time pull-right">

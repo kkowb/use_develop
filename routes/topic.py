@@ -24,7 +24,6 @@ def index():
     if board_id == -1:
         #ms = Topic.cache_all()
         ms = Topic.all_delay()
-        log('ms', ms)
     else:
         #ms = Topic.cache_find(board_id)
         ms = Topic.find_all(board_id=board_id)
@@ -33,17 +32,25 @@ def index():
     csrf_tokens[token] = u.id
     bs = Board.all()
     image = u.user_image
-    return render_template("topic/index.html", image=image, ms=ms, token=token, bs=bs)
+    zero_replies = [result for result in ms if len(result.replies()) == 0]
+    log('zero_replies', zero_replies)
+    return render_template("topic/index.html",
+                           image=image,
+                           ms=ms,
+                           token=token,
+                           bs=bs,
+                           zero_replies=zero_replies)
 
 
 @main.route('/<int:id>')
 def detail(id):
     m = Topic.get(id)
+    user = m.user()
     # 传递 topic 的所有 reply 到 页面中
     # t = int(time.time())
     # m.passed_time = t - m.created_time
     m.username = m.user().username
-    return render_template("topic/detail.html", topic=m)
+    return render_template("topic/detail.html", topic=m, user=user)
 
 
 @main.route("/add", methods=["POST"])
@@ -59,12 +66,13 @@ def add():
 @main.route("/delete")
 def delete():
     id = int(request.args.get('id'))
+    uid = int(request.args.get('uid'))
     # log('id', type(id))
     token = request.args.get('token')
     # log("token", token)
     u = current_user()
     # 判断 token 是否是我们给的
-    if token in csrf_tokens and csrf_tokens[token] == u.id:
+    if token in csrf_tokens and csrf_tokens[token] == u.id and uid == u.id:
         log(1)
         # csrf_tokens.pop(token)
         if u is not None:
@@ -81,4 +89,13 @@ def delete():
 def new():
     bs = Board.all()
     return render_template("topic/new.html", bs=bs)
+
+
+@main.route("/profile/<int:id>")
+def profile(id):
+    # id = int(request.args.get('id'))"
+    t = Topic.get(id)
+    # log('uuu', type(id), id, t)
+    user = t.user()
+    return render_template("topic/profile.html", user=user)
 

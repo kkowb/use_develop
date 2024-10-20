@@ -91,23 +91,6 @@
         <span class="user-id">用户id: {{ user.id }}</span>
         <span class="username">用户名: {{ user.username }}</span>
     </div>
-    <div>
-        <a href="{{ url_for('mail.index') }}">发私信</a>
-    </div>
-    <h3>上传用户头像</h3>
-    <div>
-        <form method="post" action="{{ url_for('.add_img') }}" enctype="multipart/form-data">
-            <span>
-                <div>
-                    <input type="file" name="file">
-                </div>
-            </span>
-            <span>
-                <div>
-                    <input type="submit" value="点击上传">
-                </div>
-            </span>
-        </form>
-    </div>
+
 </body>
 </html>
