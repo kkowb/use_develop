@@ -4,8 +4,9 @@ from flask import (
     redirect,
     url_for,
     Blueprint,
+    abort,
 )
-
+from utils import log
 from routes import *
 
 from models.board import Board
@@ -29,3 +30,16 @@ def add():
         return redirect(url_for('topic.index'))
     else:
         return render_template('board/adminError.html')
+
+
+@main.route("/delete")
+def delete():
+    id = int(request.args.get('board_id'))
+    u = current_user()
+    log('iddd', type(id), u.id == 1, u.id)
+    if u.id == 1:
+        Board.delete(id=id)
+        return redirect(url_for('topic.index'))
+    else:
+        abort(403)
+

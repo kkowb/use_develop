@@ -31,9 +31,9 @@ def index():
     u = current_user()
     csrf_tokens[token] = u.id
     bs = Board.all()
+    bs = [result for result in bs if result.deleted is False]
     image = u.user_image
     zero_replies = [result for result in ms if len(result.replies()) == 0]
-    log('zero_replies', zero_replies)
     return render_template("topic/index.html",
                            image=image,
                            ms=ms,
