@@ -88,6 +88,8 @@ def delete():
 @main.route("/new")
 def new():
     bs = Board.all()
+    bs = [result for result in bs if result.deleted is False]
+
     return render_template("topic/new.html", bs=bs)
 
 
