@@ -74,7 +74,7 @@ def delete():
     # 判断 token 是否是我们给的
     if token in csrf_tokens and csrf_tokens[token] == u.id and uid == u.id:
         log(1)
-        # csrf_tokens.pop(token)
+        csrf_tokens.pop(token)
         if u is not None:
             # log('删除 topic 的用户是', u, id)
             Topic.delete(id)
